@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Teen's Guide to Smart Investing</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- MathJax for rendering LaTeX formulas -->
+    <script type="text/x-mathjax-config">
+        MathJax.Hub.Config({
+            tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]},
+            "HTML-CSS": {
+                linebreaks: { automatic: true }
+            },
+            SVG: {
+                linebreaks: { automatic: true }
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/MathJax.js?config=TeX-MML-AM_CHTML"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f4f8; /* A very light blue-gray */
+        }
+        .chart-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            height: 300px;
+            max-height: 400px;
+        }
+        @media (min-width: 768px) {
+            .chart-container {
+                height: 350px;
+            }
+        }
+        .flowchart-step {
+            border: 2px solid #9ED2FF;
+            background-color: #DDEFFF;
+            color: #004AAD;
+        }
+        .flowchart-arrow {
+            color: #0079FF;
+        }
+        /* Styling for LaTeX formulas - MathJax will handle rendering */
+        .latex-formula {
+            font-family: 'Times New Roman', serif; /* Or a similar serif font for math */
+            font-size: 1.1em;
+            display: block;
+            text-align: center;
+            margin: 1em 0;
+            white-space: nowrap;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body class="text-gray-800">
+
+    <div class="container mx-auto p-4 md:p-8">
+
+        <header class="text-center mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-[#004AAD] mb-2">Your Money, Your Future</h1>
+            <p class="text-lg text-gray-600">An Interactive Guide to Making Your Money Grow</p>
+        </header>
+
+        <main class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <section class="md:col-span-2 bg-white rounded-lg shadow-lg p-6 flex flex-col md:flex-row items-center">
+                <div class="md:w-1/2 text-center md:text-left md:pr-8">
+                    <h2 class="text-3xl font-bold text-[#004AAD] mb-4">The Problem: Inflation's Silent Attack</h2>
+                    <p class="text-gray-700 mb-4">
+                        Inflation is the slow rise in prices over time. This means the money you have today will buy less in the future. If your money just sits in a savings account, its "purchasing power" shrinks because of inflation. Investing helps your money grow faster than inflation.
+                    </p>
+                </div>
+                <div class="w-full md:w-1/2">
+                    <div class="chart-container">
+                        <canvas id="inflationChart"></canvas>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="md:col-span-2 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-6">Setting Goals & Understanding Risk</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                    <div>
+                        <h3 class="text-2xl font-bold text-center text-[#004AAD] mb-6">The Goal: Making Money Work For You</h3>
+                        <p class="text-gray-700 mb-6 text-center">
+                            A healthy financial life needs both saving for the short-term and investing for the long-term. Understanding the difference is your first step towards financial freedom.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flowchart-step text-center p-4 rounded-lg">
+                                <h4 class="font-bold">What is Your Financial Goal?</h4>
+                            </div>
+                            <div class="text-center text-4xl font-light flowchart-arrow">↓</div>
+                            <div class="flex justify-around text-center">
+                                <div class="w-1/2 p-2">
+                                <div class="flowchart-step p-4 rounded-lg h-full">
+                                        <h5 class="font-semibold">Short-Term Goal</h5>
+                                        <p class="text-sm">(Less than 5 years)</p>
+                                        <p class="text-sm mt-2">Emergency Fund, Car, New Gadget</p>
+                                        <div class="text-2xl mt-2">→</div>
+                                        <p class="font-bold text-lg">SAVE</p>
+                                </div>
+                                </div>
+                                <div class="w-1/2 p-2">
+                                <div class="flowchart-step p-4 rounded-lg h-full">
+                                        <h5 class="font-semibold">Long-Term Goal</h5>
+                                        <p class="text-sm">(More than 5 years)</p>
+                                        <p class="text-sm mt-2">University, Retirement, Financial Independence</p>
+                                        <div class="text-2xl mt-2">→</div>
+                                        <p class="font-bold text-lg">INVEST</p>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        <h3 class="text-2xl font-bold text-center text-[#004AAD] mb-4">Navigating the Journey: Risk & Volatility</h3>
+                        <p class="text-gray-700 mb-4 text-center">
+                            Volatility is the financial world's term for standard deviation. It measures how much an investment's value goes up and down over time. Higher volatility often means higher potential returns, but also a much "bumpier ride" with a greater chance of loss.
+                        </p>
+                        <p class="text-gray-700 mb-4 text-center text-sm">
+                            Think of standard deviation from your statistics classes. It measures how spread out data points are from the average. In finance, if an investment's returns have a high standard deviation, it means its value swings wildly from its average, indicating high volatility. A savings account, for example, has almost zero volatility because its value is stable and predictable. The S&P 500, a stock market index, has much higher volatility because its value can fluctuate significantly day-to-day, though it tends to grow over the long term.
+                        </p>
+                        <p class="text-gray-700 mb-4 text-center text-sm">
+                            The **Simple Return** for an investment is calculated as:
+                            <span class="latex-formula">$$ \text{Return} = \frac{\text{Current Price} - \text{Original Price}}{\text{Original Price}} $$</span>
+                            And the **Standard Deviation of Returns** (a measure of volatility) is given by:
+                            <span class="latex-formula">$$ \sigma = \sqrt{\frac{\sum_{i=1}^{N} (R_i - \bar{R})^2}{N-1}} $$</span>
+                            Where:
+                            <ul class="list-disc list-inside text-left mx-auto max-w-sm mt-2">
+                                <li>$R_i$ = Individual return in period $i$</li>
+                                <li>$\bar{R}$ = Average (mean) return</li>
+                                <li>$N$ = Number of periods</li>
+                            </ul>
+                            This formula quantifies the "wobbliness" of returns: a larger $\sigma$ means more unpredictable swings.
+                        </p>
+                        <div class="chart-container h-[250px] max-h-[300px]">
+                            <canvas id="volatilityChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="md:col-span-2 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-4">The Engine of Growth: The Magic of Compounding</h2>
+                <p class="text-gray-700 text-center mb-6 max-w-3xl mx-auto">
+                    Compounding means earning returns not just on your original money, but also on the returns you've already earned. It's "interest on interest," creating a powerful snowball effect that makes your money grow exponentially over time. This chart shows the growth of €1,000 with a simple 8% annual return versus a compounded 8% annual return. The difference is staggering, and it highlights why starting to invest early is your biggest advantage.
+                </p>
+                <p class="text-gray-700 text-center mb-6 max-w-3xl mx-auto text-sm">
+                    Mathematically, compound interest is calculated using the formula:
+                    <br><strong class="text-xl">A = P (1 + r)$^{t}$</strong>
+                    <br>Where:
+                    <ul class="list-disc list-inside text-left mx-auto max-w-sm mt-2">
+                        <li><strong>A</strong> = The future value of the investment/loan, including interest</li>
+                        <li><strong>P</strong> = The principal investment amount (the initial deposit or loan amount)</li>
+                        <li><strong>r</strong> = The annual interest rate (as a decimal)</li>
+                        <li><strong>t</strong> = The number of years the money is invested or borrowed for</li>
+                    </ul>
+                    This formula shows how the initial principal (P) grows over time (t) at a given rate (r), with the interest earned in each period added to the principal for the next period's calculation.
+                </p>
+                <div class="chart-container h-[350px] max-h-[500px] max-w-4xl">
+                    <canvas id="compoundingChart"></canvas>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-[#004AAD] mb-4">The Safety Net: Diversification</h2>
+                 <p class="text-gray-700 mb-4 text-center">
+                    The golden rule of investing: "Don't put all your eggs in one basket." Diversification means spreading your investments across different types of assets or companies to reduce overall risk, including volatility. If one investment performs poorly, the others can help balance it out.
+                </p>
+                <p class="text-gray-700 mb-4 text-center text-sm">
+                    Beyond investing in different companies, you can also diversify by:
+                    <ul class="list-disc list-inside text-left mx-auto max-w-xs mt-2">
+                        <li>**Investing Periodically (Dollar-Cost Averaging - DCA):** Instead of investing a large sum all at once, you invest a fixed amount regularly (e.g., €50 every month). This helps reduce risk by averaging out your purchase price over time, as you buy more shares when prices are low and fewer when prices are high.</li>
+                        <li>**Diversifying by Asset Type:** Don't just stick to stocks! Consider a mix of:
+                            <ul class="list-circle list-inside ml-4">
+                                <li>**Stocks:** Represent ownership in companies. Higher potential growth, but also higher volatility.</li>
+                                <li>**Bonds:** Essentially loans to governments or companies. Generally lower risk and lower returns than stocks, providing stability.</li>
+                                <li>**Real Estate:** Investing in properties. Can provide income and appreciation, but less liquid.</li>
+                                <li>**Personal Growth/Education Skills:** Investing in yourself! Learning new skills or pursuing higher education can significantly increase your earning potential, which is one of the best investments you can make.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </p>
+                <div class="chart-container h-[250px] max-h-[300px]">
+                    <canvas id="diversificationChart"></canvas>
+                </div>
+            </section>
+
+            <section class="bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-2xl font-bold text-center text-[#004AAD] mb-4">Your First Step: ETFs vs. Mutual Funds</h2>
+                <p class="text-gray-700 mb-6 text-center">
+                    Exchange-Traded Funds (ETFs) are often a great starting point for new investors. They offer instant diversification at a very low cost. Here's a quick comparison.
+                </p>
+                <table class="w-full text-sm text-left text-gray-600">
+                    <thead class="text-xs text-[#004AAD] uppercase bg-[#DDEFFF]">
+                        <tr>
+                            <th scope="col" class="px-6 py-3 rounded-l-lg">Feature</th>
+                            <th scope="col" class="px-6 py-3">ETFs (Great for Beginners)</th>
+                            <th scope="col" class="px-6 py-3 rounded-r-lg">Mutual Funds</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="bg-white border-b border-[#DDEFFF]">
+                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">Fees</th>
+                            <td class="px-6 py-4 font-bold text-green-600">Very Low</td>
+                            <td class="px-6 py-4 text-red-600">Can be High</td>
+                        </tr>
+                        <tr class="bg-white border-b border-[#DDEFFF]">
+                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">Trading</th>
+                            <td class="px-6 py-4">Like a Stock (All day)</td>
+                            <td class="px-6 py-4">Once per Day</td>
+                        </tr>
+                        <tr class="bg-white border-b border-[#DDEFFF]">
+                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">Minimum Investment</th>
+                            <td class="px-6 py-4 font-bold text-green-600">None (Can buy 1 share)</td>
+                            <td class="px-6 py-4 text-red-600">Often €1000+</td>
+                        </tr>
+                         <tr class="bg-white">
+                            <th scope="row" class="px-6 py-4 font-medium whitespace-nowrap">Tax Efficiency</th>
+                            <td class="px-6 py-4">Generally Higher</td>
+                            <td class="px-6 py-4">Generally Lower</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section class="md:col-span-2 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-4">Understanding Stock Markets: Where Prices Are Born</h2>
+                <p class="text-gray-700 text-center mb-6 max-w-3xl mx-auto">
+                    The stock market is essentially a marketplace where shares of publicly traded companies are bought and sold. When you buy a stock, you're buying a tiny piece of ownership in that company. The prices of these shares are constantly changing, driven by two fundamental forces: **supply and demand**.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-4 rounded-lg bg-[#DDEFFF] text-[#004AAD] text-center">
+                        <h3 class="text-xl font-semibold mb-2">Demand (Buyers)</h3>
+                        <p class="text-sm">When many people want to buy a stock (high demand) and there aren't many sellers, the price tends to go UP. Think of it like a popular concert ticket – if everyone wants one, the price goes up.</p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-[#DDEFFF] text-[#004AAD] text-center">
+                        <h3 class="text-xl font-semibold mb-2">Supply (Sellers)</h3>
+                        <p class="text-sm">When many people want to sell a stock (high supply) and there aren't many buyers, the price tends to go DOWN. This is like a sale at a shop – if there's too much of an item, the price drops to encourage buyers.</p>
+                    </div>
+                </div>
+                <p class="text-gray-700 text-center mt-6 text-sm max-w-3xl mx-auto">
+                    Many factors influence supply and demand for a stock, including:
+                    <ul class="list-disc list-inside text-left mx-auto max-w-md mt-2">
+                        <li>**Company Performance:** Good earnings, new products, and strong management make a company more attractive (higher demand).</li>
+                        <li>**Economic News:** Positive economic outlooks can increase overall investor confidence (higher demand for stocks).</li>
+                        <li>**Interest Rates:** Lower interest rates can make stocks more appealing than bonds (higher demand).</li>
+                        <li>**Investor Sentiment:** General mood or feeling of investors (fear or greed) can also drive prices.</li>
+                    </ul>
+                    Understanding this basic interplay of supply and demand is key to grasping why stock prices fluctuate and how markets function.
+                </p>
+            </section>
+
+            <section class="md:col-span-2 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-4">Main Investment Products in US Markets</h2>
+                <p class="text-gray-700 text-center mb-6 max-w-3xl mx-auto">
+                    Beyond the general concepts of investing, it's helpful to know about the specific types of products you can invest in. Here are some of the most common ones found in financial markets, particularly in the US.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="p-4 rounded-lg bg-[#DDEFFF] text-[#004AAD]">
+                        <h3 class="text-xl font-semibold mb-2">Stocks</h3>
+                        <p class="text-sm">
+                            When you buy a **stock**, you are buying a small piece of ownership in a company. If the company does well, the value of your stock might go up, and you might even receive a share of the company's profits (called dividends). Stocks generally offer higher potential returns but also come with higher risk and volatility.
+                        </p>
+                    </div>
+                    <div class="p-4 rounded-lg bg-[#DDEFFF] text-[#004AAD]">
+                        <h3 class="text-xl font-semibold mb-2">Bonds (Fixed Income)</h3>
+                        <p class="text-sm">
+                            A **bond** is essentially a loan you make to a government or a company. In return, they promise to pay you back your original money (the principal) on a specific date, and they pay you regular interest payments along the way. Bonds are generally considered less risky than stocks and provide a more stable, "fixed" income, but their potential returns are usually lower.
+                        </p>
+                    </div>
+                    <div class="md:col-span-2 p-4 rounded-lg bg-[#DDEFFF] text-[#004AAD]">
+                        <h3 class="text-xl font-semibold mb-2">Underlying Assets & Derivatives</h3>
+                        <p class="text-sm mb-4">
+                            Some investment products don't represent direct ownership but derive their value from an "underlying asset" like a stock, commodity (like oil or gold), or currency. These are called **derivatives**, and two common types are futures and options.
+                        </p>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="p-3 rounded-lg bg-white text-gray-800 shadow-sm">
+                                <h4 class="font-semibold mb-1">Futures</h4>
+                                <p class="text-xs">
+                                    A **future** is an agreement to buy or sell an asset at a specific price on a specific future date. It's like making a promise today to buy something later at a price you agree on now. People use them to lock in prices or to bet on future price movements.
+                                </p>
+                            </div>
+                            <div class="p-3 rounded-lg bg-white text-gray-800 shadow-sm">
+                                <h4 class="font-semibold mb-1">Options</h4>
+                                <p class="text-xs">
+                                    An **option** gives you the *right*, but not the obligation, to buy or sell an asset at a specific price (the "strike price") before a certain date. It's like buying a ticket that lets you decide later if you want to go to the concert. Options are more complex and can be very risky if not understood well.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="md:col-span-2 bg-white rounded-lg shadow-lg p-6">
+                <h2 class="text-3xl font-bold text-center text-[#004AAD] mb-6">Key Concepts & Definitions</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+                    <div>
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Inflation:</h3>
+                        <p class="text-sm mb-4">The general rise in prices over time, causing money to buy less in the future and eroding its purchasing power.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Saving:</h3>
+                        <p class="text-sm mb-4">Setting aside money for short-term goals or emergencies, typically in a bank account, offering safety and quick access.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Investing:</h3>
+                        <p class="text-sm mb-4">Using money to purchase assets like stocks or bonds, expecting them to grow in value over the long term, aiming to outpace inflation.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Return on Investment (ROI):</h3>
+                        <p class="text-sm mb-4">The profit or loss generated from an investment, expressed as a percentage of the initial cost, measuring its performance.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Compounding:</h3>
+                        <p class="text-sm mb-4">Earning returns not just on your original money, but also on the returns you've already earned, creating accelerating, exponential growth over time.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Risk:</h3>
+                        <p class="text-sm mb-4">The chance that an investment might not perform as expected, or even lose value, always present in investing.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Volatility:</h3>
+                        <p class="text-sm mb-4">How much and how quickly an investment's price moves up or down over time, a measure of price swings.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Standard Deviation of Returns:</h3>
+                        <p class="text-sm mb-4">A statistical measure quantifying volatility, showing how widely an investment's returns are dispersed from their average.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Risk-Return Trade-off:</h3>
+                        <p class="text-sm mb-4">The principle that higher potential returns generally come with higher levels of risk and greater possibility of loss.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Systematic Risk:</h3>
+                        <p class="text-sm mb-4">Market-wide risk that affects most investments and cannot be eliminated through diversification (e.g., economic recession).</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Unsystematic Risk:</h3>
+                        <p class="text-sm mb-4">Specific risk to a company or industry that can be reduced through diversification (e.g., a company's poor sales).</p>
+                    </div>
+                    <div>
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Diversification:</h3>
+                        <p class="text-sm mb-4">Spreading investments across various assets, companies, and industries to reduce overall risk and smooth out returns.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Dollar-Cost Averaging (DCA):</h3>
+                        <p class="text-sm mb-4">Investing a fixed amount regularly, regardless of market fluctuations, to average out purchase prices over time.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Mutual Funds:</h3>
+                        <p class="text-sm mb-4">Investment vehicles pooling money from many investors into a diversified portfolio, managed by professionals.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Exchange-Traded Funds (ETFs):</h3>
+                        <p class="text-sm mb-4">Diversified baskets of investments that trade like individual stocks throughout the day, often passively managed with low fees.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Stock Markets:</h3>
+                        <p class="text-sm mb-4">Marketplaces where shares of publicly traded companies are bought and sold, with prices driven by supply and demand.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Stocks:</h3>
+                        <p class="text-sm mb-4">Represent ownership in companies, offering potential for growth and dividends, but with higher risk.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Bonds (Fixed Income):</h3>
+                        <p class="text-sm mb-4">Loans made to governments or companies, offering regular interest payments and generally lower risk than stocks.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Underlying Assets:</h3>
+                        <p class="text-sm mb-4">The assets (e.g., stocks, commodities) from which derivatives derive their value.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Derivatives:</h3>
+                        <p class="text-sm mb-4">Financial contracts whose value is derived from an underlying asset, used for hedging or speculation.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Futures:</h3>
+                        <p class="text-sm mb-4">Agreements to buy or sell an asset at a specific price on a specific future date, used to lock in prices.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Options:</h3>
+                        <p class="text-sm mb-4">Give the right, but not the obligation, to buy or sell an asset at a specific price (the "strike price") before a certain date.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Financial Goals:</h3>
+                        <p class="text-sm mb-4">Clearly defined objectives for money, guiding decisions on saving versus investing and appropriate financial tools.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Investment Accounts:</h3>
+                        <p class="text-sm mb-4">Accounts opened with brokers to hold and manage investments like stocks, bonds, or ETFs.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Interest Rate (Price of Money):</h3>
+                        <p class="text-sm mb-4">The cost of borrowing money or the return earned on lending money, influencing investment attractiveness.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Financial Literacy:</h3>
+                        <p class="text-sm mb-4">The knowledge and skills to make informed and effective decisions about financial resources.</p>
+
+                        <h3 class="font-semibold text-[#004AAD] mb-1">Purchasing Power:</h3>
+                        <p class="text-sm mb-4">The value of money in terms of the goods and services it can buy, eroded by inflation.</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        const brilliantBlues = {
+            deep: '#004AAD',
+            bright: '#0079FF',
+            light: '#52A9FF',
+            sky: '#9ED2FF',
+            pale: '#DDEFFF',
+        };
+
+        const chartTooltipOptions = {
+            plugins: {
+                tooltip: {
+                    callbacks: {
+                        title: function(tooltipItems) {
+                            const item = tooltipItems[0];
+                            let label = item.chart.data.labels[item.dataIndex];
+                            if (Array.isArray(label)) {
+                              return label.join(' ');
+                            }
+                            return label;
+                        }
+                    }
+                }
+            }
+        };
+
+        function wrapLabel(str, maxLen) {
+            if (str.length <= maxLen) {
+                return str;
+            }
+            const words = str.split(' ');
+            let lines = [];
+            let currentLine = '';
+            for (const word of words) {
+                if ((currentLine + word).length > maxLen && currentLine.length > 0) {
+                    lines.push(currentLine.trim());
+                    currentLine = '';
+                }
+                currentLine += word + ' ';
+            }
+            lines.push(currentLine.trim());
+            return lines;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+
+            const defaultChartOptions = {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: chartTooltipOptions.plugins,
+                scales: {
+                    y: {
+                        ticks: { color: brilliantBlues.deep },
+                        grid: { color: brilliantBlues.pale }
+                    },
+                    x: {
+                        ticks: { color: brilliantBlues.deep },
+                        grid: { display: false }
+                    }
+                },
+                legend: {
+                    labels: {
+                        color: brilliantBlues.deep
+                    }
+                }
+            };
+            
+            new Chart(document.getElementById('inflationChart'), {
+                type: 'bar',
+                data: {
+                    labels: ['Year 1', 'Year 5', 'Year 10', 'Year 20'],
+                    datasets: [{
+                        label: 'Purchasing Power of €100 (at 3% inflation)',
+                        data: [100, 86.26, 74.41, 55.37],
+                        backgroundColor: brilliantBlues.bright,
+                        borderColor: brilliantBlues.deep,
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    ...defaultChartOptions,
+                    plugins: {
+                        ...chartTooltipOptions.plugins,
+                        tooltip: {
+                             ...chartTooltipOptions.plugins.tooltip,
+                            callbacks: {
+                               ...chartTooltipOptions.plugins.tooltip.callbacks,
+                                label: (context) => `Value: €${context.raw.toFixed(2)}`
+                            }
+                        },
+                        legend: { display: false }
+                    },
+                     scales: {
+                        y: {
+                            ...defaultChartOptions.scales.y,
+                            ticks: {
+                                ...defaultChartOptions.scales.y.ticks,
+                                callback: value => `€${value}`
+                            }
+                        }
+                     }
+                }
+            });
+
+            new Chart(document.getElementById('volatilityChart'), {
+                type: 'line',
+                data: {
+                    labels: Array.from({length: 12}, (_, i) => `Month ${i + 1}`),
+                    datasets: [
+                        {
+                            label: 'Low Volatility (e.g., Savings Account)',
+                            data: [100, 100.05, 100.10, 100.15, 100.20, 100.25, 100.30, 100.35, 100.40, 100.45, 100.50, 100.55],
+                            borderColor: brilliantBlues.deep,
+                            backgroundColor: 'transparent',
+                            tension: 0.1,
+                            pointRadius: 0
+                        },
+                        {
+                            label: 'High Volatility (e.g., S&P 500)',
+                            data: [100, 105, 98, 108, 102, 112, 105, 115, 110, 120, 112, 125],
+                            borderColor: brilliantBlues.light,
+                            backgroundColor: 'transparent',
+                            tension: 0.1,
+                            pointRadius: 0,
+                            borderDash: [5, 5]
+                        }
+                    ]
+                },
+                options: {
+                    ...defaultChartOptions,
+                    plugins: {
+                        ...chartTooltipOptions.plugins,
+                        legend: { display: true, position: 'bottom', labels: { color: brilliantBlues.deep } }
+                    },
+                    scales: {
+                        y: { display: false },
+                        x: { display: false }
+                    }
+                }
+            });
+
+            const compoundingYears = 40;
+            const compoundingLabels = Array.from({length: compoundingYears + 1}, (_, i) => `Year ${i}`);
+            const initialInvestment = 1000;
+            const annualRate = 0.08;
+            const simpleInterestData = compoundingLabels.map((_, i) => initialInvestment + (initialInvestment * annualRate * i));
+            const compoundInterestData = compoundingLabels.map((_, i) => initialInvestment * Math.pow(1 + annualRate, i));
+
+            new Chart(document.getElementById('compoundingChart'), {
+                type: 'line',
+                data: {
+                    labels: compoundingLabels,
+                    datasets: [
+                        {
+                            label: 'Simple Interest',
+                            data: simpleInterestData,
+                            borderColor: brilliantBlues.light,
+                            backgroundColor: 'transparent',
+                            tension: 0.1,
+                        },
+                        {
+                            label: 'Compound Interest (The Magic)',
+                            data: compoundInterestData,
+                            borderColor: brilliantBlues.deep,
+                            backgroundColor: `${brilliantBlues.deep}33`,
+                            fill: true,
+                            tension: 0.1,
+                        }
+                    ]
+                },
+                options: {
+                    ...defaultChartOptions,
+                    plugins: {
+                       ...chartTooltipOptions.plugins,
+                        legend: { display: true, position: 'top', labels: { color: brilliantBlues.deep } }
+                    },
+                    scales: {
+                        y: {
+                           ...defaultChartOptions.scales.y,
+                            ticks: {
+                               ...defaultChartOptions.scales.y.ticks,
+                                callback: value => `€${Math.round(value).toLocaleString()}`
+                            }
+                        },
+                        x: {
+                           ...defaultChartOptions.scales.x,
+                            ticks: {
+                               ...defaultChartOptions.scales.x.ticks,
+                                callback: function(val, index) {
+                                    return index % 5 === 0 ? this.getLabelForValue(val) : '';
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+
+            new Chart(document.getElementById('diversificationChart'), {
+                type: 'doughnut',
+                data: {
+                    labels: ['Company Stocks (Higher Risk)', 'Government Bonds (Lower Risk)', 'Real Estate', 'International Stocks'],
+                    datasets: [{
+                        label: 'Sample Diversified Portfolio',
+                        data: [45, 25, 15, 15],
+                        backgroundColor: [
+                            brilliantBlues.deep,
+                            brilliantBlues.light,
+                            brilliantBlues.sky,
+                            brilliantBlues.bright,
+                        ],
+                        hoverOffset: 4
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                       ...chartTooltipOptions.plugins,
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                color: brilliantBlues.deep,
+                                boxWidth: 12,
+                                padding: 15,
+                                generateLabels: function(chart) {
+                                    const data = chart.data;
+                                    if (data.labels.length && data.datasets.length) {
+                                        return data.labels.map(function(label, i) {
+                                            const meta = chart.getDatasetMeta(0);
+                                            const ds = data.datasets[0];
+                                            const arc = meta.data[i];
+                                            const fill = ds.backgroundColor[i];
+                                            const text = wrapLabel(label, 25);
+                                            return {
+                                                text: text,
+                                                fillStyle: fill,
+                                                strokeStyle: fill,
+                                                lineWidth: 1,
+                                                hidden: isNaN(ds.data[i]) || meta.hidden,
+                                                index: i
+                                            };
+                                        });
+                                    }
+                                    return [];
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
